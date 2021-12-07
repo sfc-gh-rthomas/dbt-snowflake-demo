@@ -1,5 +1,4 @@
 version: 2
- 
 sources:
   - name: covid19_by_starschema
     database: covid19_by_starschema_dm
