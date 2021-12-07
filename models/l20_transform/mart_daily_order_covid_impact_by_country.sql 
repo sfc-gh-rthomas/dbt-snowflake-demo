@@ -1,0 +1,14 @@
+{{ 
+config(
+      materialized='incremental'
+      ) 
+}}
+
+SELECT  DISTINCT o.*, (w.cases/w.population * 100) as case_percentage_of_population 
+FROM {{ref('tfm_daily_orders_by_country')}} o
+LEFT OUTER JOIN {{source('covid19_by_starschema','ecdc_global')}} w  ON  REPLACE(UPPER(country_region), '_', ' ') =UPPER(o.country) and CAST(w.date AS DATE)=o.order_date
+
+{% if is_incremental() %}
+  -- this filter will only be applied on an incremental run
+ WHERE (order_date) NOT IN (select order_date from {{ this }})
+ {% endif %}

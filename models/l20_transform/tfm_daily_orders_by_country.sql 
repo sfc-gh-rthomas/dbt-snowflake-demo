@@ -1,0 +1,13 @@
+{{ 
+config(
+        pre_hook = change_warehouse_size( size='LARGE')
+      , post_hook= change_warehouse_size( size='SMALL')
+    ) 
+}}
+SELECT ord.order_date     
+     , ord.country   
+     , ord.region
+     , ord.mktsegment
+     , SUM(ord.order_amount)  OVER(partition BY ord.order_date, ord.country, ord.region ) total_order_amount
+  FROM {{ref('tfm_customer_order')}} ord
+ WHERE order_status NOT IN ('F')

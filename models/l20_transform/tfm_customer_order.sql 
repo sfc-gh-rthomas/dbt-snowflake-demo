@@ -1,0 +1,13 @@
+SELECT orders.order_id AS order_id,
+       customer.id AS customer_id,
+       order_date,
+       region,
+       country,
+       order_amount,
+       order_status,
+       phone AS customer_phone,
+       name AS customer_name,
+       mktsegment
+   FROM       {{ref('base_customer')}}  customer
+   INNER JOIN {{ref('base_orders')}}  orders 
+      ON customer.id = orders.customer_id
