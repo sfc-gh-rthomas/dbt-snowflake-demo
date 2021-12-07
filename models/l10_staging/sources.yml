@@ -1,0 +1,67 @@
+version: 2
+ 
+sources:
+  - name: covid19_by_starschema
+    database: covid19_by_starschema_dm
+    schema: "PUBLIC"
+    tables:
+      - name: ecdc_global
+  - name: snowflake_external
+    database: "{{ target.database }}"
+    schema: "PUBLIC"
+    loader: S3
+    tables:
+       - name: customer
+         external: 
+           location: "@ext_stage_sample_data/customer"
+           file_format: "csv"
+           auto_refresh: true
+         columns:           
+           - name: id
+             data_type: int
+             tests:
+               - unique
+               - not_null
+           - name: name
+             data_type: varchar(40)
+           - name: address
+             data_type: varchar(40)
+           - name: phone
+             data_type: varchar(40)
+           - name: mktsegment
+             data_type: varchar(40)
+           - name: country
+             data_type: varchar(40)
+             tests:
+               - not_null
+           - name: region
+             data_type: varchar(40)
+       - name: orders
+         external: 
+           location: '@ext_stage_sample_data/order/'
+           file_format: 'csv'
+           auto_refresh: true
+         columns:           
+           - name: order_id
+             data_type: int
+             tests:
+               - unique
+               - not_null
+           - name: customer_id
+             data_type: int
+             tests:
+               - relationships:
+                   to: ref('customers')
+                   field: id
+           - name: order_status
+             data_type: varchar(1)
+             tests:
+               - accepted_values:
+                  values: ['O', 'F', 'P']
+           - name: order_amount
+             data_type: number(12,2)
+             tests:
+               - not_null
+           - name: order_date
+             data_type: date
+
