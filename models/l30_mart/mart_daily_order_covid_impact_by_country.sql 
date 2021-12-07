@@ -11,4 +11,4 @@ LEFT OUTER JOIN {{source('covid19_by_starschema','ecdc_global')}} w  ON  REPLACE
 {% if is_incremental() %}
   -- this filter will only be applied on an incremental run
  WHERE (order_date) NOT IN (select order_date from {{ this }})
- {% endif %}
+ {% endif %}  
