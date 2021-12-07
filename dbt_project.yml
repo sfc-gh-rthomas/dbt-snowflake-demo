@@ -40,7 +40,12 @@ models:
       l10_staging:
           schema: l10_staging
           materialized: view
+          +enabled: true
       l20_transform:
           schema: l20_transform
           materialized: view
+          +enabled: true
       l30_mart:
+          schema: l30_mart
+          materialized: view
+
