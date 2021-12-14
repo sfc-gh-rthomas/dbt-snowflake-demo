@@ -32,7 +32,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
-   snowflake_hol:
+   snowflake_vhol:
       # Applies to all files under models/example/
       example:
           materialized: view
@@ -40,11 +40,9 @@ models:
       l10_staging:
           schema: l10_staging
           materialized: view
-          +enabled: true
       l20_transform:
           schema: l20_transform
           materialized: view
-          +enabled: true
       l30_mart:
           schema: l30_mart
           materialized: view
