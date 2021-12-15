@@ -46,8 +46,3 @@ models:
       l30_mart:
           schema: l30_mart
           materialized: view
-
-<<<<<<< HEAD
-
-=======
->>>>>>> b6ad6c3b309a22e9502a2e35326830b9b49d3764
