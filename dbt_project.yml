@@ -44,3 +44,7 @@ models:
           schema: l20_transform
           materialized: view
       l30_mart:
+          schema: l30_mart
+          materialized: view
+
+
